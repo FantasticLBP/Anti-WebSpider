@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "NumberFont";
+  src: url('http://127.0.0.1:8080/Util/analysis');
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: "CharacterFont";
+  src: url('http://127.0.0.1:8080/Util/map');
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+h2 {
+  font-family: "NumberFont";
+}
+
+
+h3,a{
+  font-family: "CharacterFont";
+}
+
+div{
+  margin: 10px;
+}
+
+ul{
+  font: 30px;
+  color: #333333;
+  text-align: center;
+}
+li{
+  list-style: none;
+  text-align: left;
+  margin: 5px;
+}
+
