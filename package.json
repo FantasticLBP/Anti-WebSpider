@@ -1,0 +1,30 @@
+{
+  "name": "Anti-WebSpider",
+  "version": "1.0.0",
+  "description": "> 对于内容型的公司，数据的安全性不言而喻。一个在线教育的平台，题目的数据很重要吧，但是被别人通过爬虫技术全部爬走了，那结果就是“凉凉”。再比说有个独立开发者想抄袭你的产品，通过抓包和爬虫手段将你核心的数据拿走，然后短期内做个网站和 App，短期内成为你的劲敌。成果：segmentfault 上发表过[文章](https://segmentfault.com/a/1190000017899193)，获赞 148。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FantasticLBP/Anti-WebSpider.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FantasticLBP/Anti-WebSpider/issues"
+  },
+  "homepage": "https://github.com/FantasticLBP/Anti-WebSpider#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "husky": "^4.2.3"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  }
+}
