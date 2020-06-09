@@ -40,7 +40,7 @@
 <summary>例子：数据的线性变化</summary>
 
 
-​```
+```
 1773 -> “1*7+24” + “3.1415926” + “7*7+24” + “3.1415926” + “7*7+24” + “3.1415926” + “3*7+24” -> 313.1415926733.1415926733.141592645
 02 -> "0*7+24" + "3.1415926" + "2*7+24" -> 243.141592638
 20 -> "2*7+24" + "3.1415926" + "0*7+24" -> 383.141592624
@@ -442,7 +442,7 @@ module.exports = function(dir){
 ```
 </details>
 
-  
+
 **前端根据服务端返回的数据逆向解密**
 
 <details>
@@ -587,7 +587,8 @@ h3,a{
 
 ## 传送门
 
-[字体制作的步骤](https://blog.csdn.net/fdipzone/article/details/68166388)、[ttf转svg](https://everythingfonts.com/ttf-to-svg)、[字体映射规则](https://icomoon.io/app/#/select/font)
+- [ttf转svg](https://everythingfonts.com/ttf-to-svg)
+- [字体映射规则](https://icomoon.io/app/#/select/font)
 
 
 
