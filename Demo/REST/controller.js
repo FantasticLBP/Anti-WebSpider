@@ -6,20 +6,16 @@ function addMapping(router, mapping){
         if (url.startsWith("GET")) {
             var path = url.substring(4);
             router.get(path,mapping[url]);
-            console.log(`Register URL mapping: GET: ${path}`);
         }else if (url.startsWith('POST ')) {
             var path = url.substring(5);
             router.post(path, mapping[url]);
-            console.log(`Register URL mapping: POST ${path}`);
         } else if (url.startsWith('PUT ')) {
             var path = url.substring(4);
             router.put(path, mapping[url]);
-            console.log(`Register URL mapping: PUT ${path}`);
         } else if (url.startsWith('DELETE ')) {
             var path = url.substring(7);
             router.del(path, mapping[url]);
-            console.log(`Register URL mapping: DELETE ${path}`);
-        } else {
+        } else {                                                                                                                                              
             console.log(`Invalid URL: ${url}`);
         }
 

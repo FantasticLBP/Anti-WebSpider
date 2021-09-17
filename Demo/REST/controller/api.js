@@ -34,7 +34,7 @@ module.exports = {
             code: 200,
             message: "success",
             data: {
-                name: "@杭城小刘",
+                name: LBPEncode("杭刘", rule),
                 year: LBPEncode("1995", rule),
                 month: LBPEncode("02", rule),
                 day: LBPEncode("20", rule),

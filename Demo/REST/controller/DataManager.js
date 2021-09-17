@@ -1,4 +1,3 @@
-var lastNumberCategory;
 var JoinOparatorSymbol = "3.1415926";
 
 function isNotEmptyStr($str) {
@@ -16,8 +15,6 @@ function rawDataMap(rawData, ruleType) {
   var mapData;
   var rawNumber = parseInt(rawData);
   var ruleTypeNumber = parseInt(ruleType);
-  if (!isNaN(rawData)) {
-    lastNumberCategory = ruleTypeNumber;
     //字体文件1下的数据加密规则
     if (ruleTypeNumber == 1) {
       if (rawNumber == 1) {
@@ -85,7 +82,7 @@ function rawDataMap(rawData, ruleType) {
         mapData = 0;
       }
     }
-    //字体文件3下的数据加密规则
+    //字体文件3下的数据加密规则 1 2 0
     else if (ruleTypeNumber == 2) {
 
       if (rawNumber == 1) {
@@ -151,47 +148,57 @@ function rawDataMap(rawData, ruleType) {
       else if (rawNumber == 0) {
         mapData = "&#xe1f2;";
       }
-    }
-    else{
-      mapData = rawNumber;
-    }
-  } else if (ruleTypeNumber == 4) {
-    var sources = ["年", "万", "业", "人", "信", "元", "千", "司", "州", "资", "造", "钱"];
-    //判断字符串为汉字
-    if (/^[\u4e00-\u9fa5]*$/.test(rawData)) {
+    } else if (ruleTypeNumber == 4) {
+      var sources = ["年", "万", "业", "人", "信", "元", "千", "司", "州", "资", "造", "钱", "杭", "城", "小", "刘", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      //判断字符串为汉字
+      if (/^[\u4e00-\u9fa5]*$/.test(rawData)) {
 
-      if (sources.indexOf(rawData) > -1) {
-        var currentChineseHexcod = rawData.charCodeAt(0).toString(16);
-        var lastCompoent;
-        var mapComponetnt;
-        var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-        var characters = ["a", "b", "c", "d", "e", "f", "g", "h", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        if (sources.indexOf(rawData) > -1) {
+          var currentChineseHexcod = rawData.charCodeAt(0).toString(16);
+          var lastCompoent;
+          var mapComponetnt;
+          var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+          var characters = ["a", "b", "c", "d", "e", "f"]
 
-        if (currentChineseHexcod.length == 4) {
-          lastCompoent = currentChineseHexcod.substr(3, 1);
-          var locationInComponents = 0;
-          if (/[0-9]/.test(lastCompoent)) {
-            locationInComponents = numbers.indexOf(lastCompoent);
-            mapComponetnt = numbers[(locationInComponents + 1) % 10];
+          if (currentChineseHexcod.length == 4) {
+            lastCompoent = currentChineseHexcod.substr(3, 1);
+            var locationInComponents = 0;
+            if (/[0-9]/.test(lastCompoent)) {
+              locationInComponents = numbers.indexOf(lastCompoent);
+              mapComponetnt = numbers[(locationInComponents + 1) % 10];
+            }
+            else if (/[a-z]/.test(lastCompoent)) {
+              locationInComponents = characters.indexOf(lastCompoent);
+              mapComponetnt = characters[(locationInComponents + 1) % 6];
+            }
+            mapData = "&#x" + currentChineseHexcod.substr(0, 3) + mapComponetnt + ";";
           }
-          else if (/[a-z]/.test(lastCompoent)) {
-            locationInComponents = characters.indexOf(lastCompoent);
-            mapComponetnt = characters[(locationInComponents + 1) % 26];
-          }
-          mapData = "&#x" + currentChineseHexcod.substr(0, 3) + mapComponetnt + ";";
+        } else {
+          mapData = `ff${rawData}`;
         }
       } else {
-        mapData = rawData;
+        if (rawNumber == 0) {
+          mapData = '&#xff1;';
+        } else if (rawNumber == 1) {
+          mapData = '&#xff0;';
+        } else if (rawNumber == 2) {
+          mapData = '&#xff2;';
+        } else if (rawNumber == 3) {
+          mapData = '&#xff3;';
+        } else if (rawNumber == 4) {
+          mapData = '&#xff5;';
+        } else if (rawNumber == 5) {
+          mapData = '&#xff4;';
+        } else if (rawNumber == 6) {
+          mapData = '&#xff7;';
+        } else if (rawNumber == 7) {
+          mapData = '&#xff6;';
+        } else if (rawNumber == 8) {
+          mapData = '&#xff5;';
+        } else if (rawNumber == 9) {
+          mapData = '&#xff8;';
+        }
       }
-
-    }
-    else if (/[0-9]/.test(rawData)) {
-      mapData = rawDataMap(rawData, 2);
-    }
-    else {
-      mapData = rawData;
-    }
-
   }
   return mapData;
 }
