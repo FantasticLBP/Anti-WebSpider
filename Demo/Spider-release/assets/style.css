@@ -5,12 +5,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@font-face {
+/* @font-face {
   font-family: "CharacterFont";
   src: url('http://127.0.0.1:8080/Util/map');
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
 
 
 

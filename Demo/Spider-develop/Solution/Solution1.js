@@ -11,7 +11,7 @@
 				if (!jQuery.isEmptyObject(json)) {
 					var data = json.data;
 					var log = data.analysis;
-					$("#name").text(data.name);
+					$("#name").html(data.name);
 					$("#year").html(getRawData(data.year,log));
 					$("#month").html(getRawData(data.month,log));
 					$("#day").html(getRawData(data.day,log));

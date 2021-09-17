@@ -69,7 +69,7 @@
 <details>
 <summary>服务端：数据的加工处理</summary>
 
-```js
+​```js
 // json
 var JoinOparatorSymbol = "3.1415926";
 function encode(rawData, ruleType) {
@@ -125,8 +125,6 @@ function rawDataMap(rawData, ruleType) {
   var mapData;
   var rawNumber = parseInt(rawData);
   var ruleTypeNumber = parseInt(ruleType);
-  if (!isNaN(rawData)) {
-    lastNumberCategory = ruleTypeNumber;
     //字体文件1下的数据加密规则
     if (ruleTypeNumber == 1) {
       if (rawNumber == 1) {
@@ -260,49 +258,78 @@ function rawDataMap(rawData, ruleType) {
       else if (rawNumber == 0) {
         mapData = "&#xe1f2;";
       }
-    }
-    else{
-      mapData = rawNumber;
-    }
-  } else if (ruleTypeNumber == 4) {
-    var sources = ["年", "万", "业", "人", "信", "元", "千", "司", "州", "资", "造", "钱"];
-    //判断字符串为汉字
-    if (/^[\u4e00-\u9fa5]*$/.test(rawData)) {
+    } else if (ruleTypeNumber == 4) {
+      var sources = ["年", "万", "业", "人", "信", "元", "千", "司", "州", "资", "造", "钱", "杭", "城", "小", "刘", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      //判断字符串为汉字
+      if (/^[\u4e00-\u9fa5]*$/.test(rawData)) {
 
-      if (sources.indexOf(rawData) > -1) {
-        var currentChineseHexcod = rawData.charCodeAt(0).toString(16);
-        var lastCompoent;
-        var mapComponetnt;
-        var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-        var characters = ["a", "b", "c", "d", "e", "f", "g", "h", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        if (sources.indexOf(rawData) > -1) {
+          var currentChineseHexcod = rawData.charCodeAt(0).toString(16);
+          var lastCompoent;
+          var mapComponetnt;
+          var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+          var characters = ["a", "b", "c", "d", "e", "f"]
 
-        if (currentChineseHexcod.length == 4) {
-          lastCompoent = currentChineseHexcod.substr(3, 1);
-          var locationInComponents = 0;
-          if (/[0-9]/.test(lastCompoent)) {
-            locationInComponents = numbers.indexOf(lastCompoent);
-            mapComponetnt = numbers[(locationInComponents + 1) % 10];
+          if (currentChineseHexcod.length == 4) {
+            lastCompoent = currentChineseHexcod.substr(3, 1);
+            var locationInComponents = 0;
+            if (/[0-9]/.test(lastCompoent)) {
+              locationInComponents = numbers.indexOf(lastCompoent);
+              mapComponetnt = numbers[(locationInComponents + 1) % 10];
+            }
+            else if (/[a-z]/.test(lastCompoent)) {
+              locationInComponents = characters.indexOf(lastCompoent);
+              mapComponetnt = characters[(locationInComponents + 1) % 6];
+            }
+            mapData = "&#x" + currentChineseHexcod.substr(0, 3) + mapComponetnt + ";";
           }
-          else if (/[a-z]/.test(lastCompoent)) {
-            locationInComponents = characters.indexOf(lastCompoent);
-            mapComponetnt = characters[(locationInComponents + 1) % 26];
-          }
-          mapData = "&#x" + currentChineseHexcod.substr(0, 3) + mapComponetnt + ";";
+        } else {
+          mapData = `ff${rawData}`;
         }
       } else {
-        mapData = rawData;
+        mapData = `ff${rawData}`;
       }
+  }
+  return mapData;
+}
 
+function encode(rawData, ruleType) {
+  if (!isNotEmptyStr(rawData)) {
+    return "";
+  }
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+
+  var encodeData = "";
+  for (var index = 0; index < rawData.length; index++) {
+    var datacomponent = rawData[index];
+    if (!isNaN(datacomponent)) {
+      if (ruleType < 3) {
+        var currentNumber = rawDataMap(String(datacomponent), ruleType);
+        encodeData += (currentNumber * month + day) + JoinOparatorSymbol;
+      }
+      else if (ruleType == 4) {
+        encodeData += rawDataMap(String(datacomponent), ruleType);
+      }
+      else {
+        encodeData += rawDataMap(String(datacomponent), ruleType) + JoinOparatorSymbol;
+      }
     }
-    else if (/[0-9]/.test(rawData)) {
-      mapData = rawDataMap(rawData, 2);
-    }
-    else {
-      mapData = rawData;
+    else if (ruleType == 4) {
+      encodeData += rawDataMap(String(datacomponent), ruleType);
     }
 
   }
-  return mapData;
+  if (encodeData.length >= JoinOparatorSymbol.length) {
+    var lastTwoString = encodeData.substring(encodeData.length - JoinOparatorSymbol.length, encodeData.length);
+    if (lastTwoString == JoinOparatorSymbol) {
+      encodeData = encodeData.substring(0, encodeData.length - JoinOparatorSymbol.length);
+    }
+  }
+  console.log(encodeData);
+  return encodeData;
 }
 ```
 </details>
@@ -477,11 +504,9 @@ function getRawData($json,analisys) {
       if (!isNaN(datacomponent) && analisys < 3){
           var currentNumber = parseInt(datacomponent);
           orginalMessage += (currentNumber -  day)/month;
-      }
-      else if(analisys == 3){
-          orginalMessage += datacomponent;
-      }
-      else{
+      } else if(analisys == 4){
+         orginalMessage += $json.split("ff").filter((idx, value) => idx !== '' ).join("");
+      } else {
         //其他情况待续，本 Demo 根据本人在研究反爬方面的技术并实践后持续更新
       }
   }

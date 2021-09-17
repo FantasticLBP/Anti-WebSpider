@@ -5,22 +5,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@font-face {
-  font-family: "CharacterFont";
-  src: url('http://127.0.0.1:8080/Util/map');
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-
-
-h2 {
+* {
   font-family: "NumberFont";
-}
-
-
-h3,a{
-  font-family: "CharacterFont";
 }
 
 div{
